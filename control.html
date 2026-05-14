@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Reportados Audio Control</title>
+  <link rel="stylesheet" href="css/control.css" />
+</head>
+<body>
+  <header class="header">
+    <div class="title">
+      <img src="assets/logo.png" alt="audio-overlay" class="header-logo"
+           onerror="this.style.display='none';this.nextElementSibling.style.display='block'" />
+      <h1 class="header-title" style="display:none">audio-overlay</h1>
+    </div>
+    <div class="header-actions">
+      <div id="overlay-status" class="status status--off" title="Estado del overlay">
+        <span class="status-dot"></span>
+        <span class="status-text">Overlay no conectado</span>
+      </div>
+      <button id="open-settings" class="btn btn--ghost" type="button" title="Ajustes">
+        <svg class="icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="8" cy="8" r="2.2"/>
+          <path d="M13.4 9.3a5.6 5.6 0 0 0 0-2.6l1.4-1.1-1.4-2.4-1.7.6a5.6 5.6 0 0 0-2.2-1.3L9.2.8H6.8l-.3 1.7a5.6 5.6 0 0 0-2.2 1.3l-1.7-.6L1.2 5.6l1.4 1.1a5.6 5.6 0 0 0 0 2.6L1.2 10.4l1.4 2.4 1.7-.6a5.6 5.6 0 0 0 2.2 1.3l.3 1.7h2.4l.3-1.7a5.6 5.6 0 0 0 2.2-1.3l1.7.6 1.4-2.4z"/>
+        </svg>
+        Ajustes
+      </button>
+      <button id="open-overlay" class="btn btn--ghost" type="button">Abrir overlay</button>
+    </div>
+  </header>
+
+  <aside id="settings-panel" class="settings-panel" aria-hidden="true">
+    <div class="settings-panel__header">
+      <h2>Configuración del overlay</h2>
+      <button id="close-settings" class="btn btn--icon" type="button" title="Cerrar">
+        <svg class="icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+          <path d="M3 3l10 10M13 3L3 13"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="settings-panel__body">
+      <section class="settings-group">
+        <h3>Tamaño</h3>
+        <div class="settings-segmented" data-setting="size">
+          <button type="button" data-value="large">Grande</button>
+          <button type="button" data-value="small">Pequeño</button>
+        </div>
+      </section>
+
+      <section class="settings-group">
+        <h3>Posición</h3>
+        <div class="position-grid" role="radiogroup" aria-label="Posición">
+          <button type="button" data-h="left"   data-v="top"    title="Arriba izquierda" aria-label="Arriba izquierda"></button>
+          <button type="button" data-h="center" data-v="top"    title="Arriba centro" aria-label="Arriba centro"></button>
+          <button type="button" data-h="right"  data-v="top"    title="Arriba derecha" aria-label="Arriba derecha"></button>
+          <button type="button" data-h="left"   data-v="bottom" title="Abajo izquierda" aria-label="Abajo izquierda"></button>
+          <button type="button" data-h="center" data-v="bottom" title="Abajo centro" aria-label="Abajo centro"></button>
+          <button type="button" data-h="right"  data-v="bottom" title="Abajo derecha" aria-label="Abajo derecha"></button>
+        </div>
+      </section>
+
+      <section class="settings-group">
+        <h3>Animación de entrada</h3>
+        <div class="settings-segmented anim-segmented" data-setting="animation">
+          <button type="button" data-value="from-top" title="Desde arriba">
+            <svg class="icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M8 2v10M4 8l4 4 4-4"/>
+            </svg>
+          </button>
+          <button type="button" data-value="from-bottom" title="Desde abajo">
+            <svg class="icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M8 14V4M4 8l4-4 4 4"/>
+            </svg>
+          </button>
+          <button type="button" data-value="from-left" title="Desde la izquierda">
+            <svg class="icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M2 8h10M8 4l4 4-4 4"/>
+            </svg>
+          </button>
+          <button type="button" data-value="from-right" title="Desde la derecha">
+            <svg class="icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 8H4M8 4L4 8l4 4"/>
+            </svg>
+          </button>
+        </div>
+      </section>
+
+      <section class="settings-group">
+        <h3>Colores</h3>
+        <label class="color-row">
+          <span>Fondo del banner</span>
+          <input type="color" data-color="background" />
+        </label>
+        <label class="color-row range-row">
+          <span>Opacidad del fondo</span>
+          <div class="range-wrap">
+            <input type="range" min="0" max="100" step="1" data-range="backgroundOpacity" />
+            <output data-output="backgroundOpacity">80%</output>
+          </div>
+        </label>
+        <label class="color-row">
+          <span>Color del texto</span>
+          <input type="color" data-color="text" />
+        </label>
+        <label class="color-row">
+          <span>Onda (reproducido)</span>
+          <input type="color" data-color="waveformFilled" />
+        </label>
+        <label class="color-row">
+          <span>Onda (pendiente)</span>
+          <input type="color" data-color="waveformEmpty" />
+        </label>
+        <label class="color-row">
+          <span>Borde del avatar</span>
+          <input type="color" data-color="avatarBorder" />
+        </label>
+      </section>
+
+      <section class="settings-group">
+        <button id="reset-settings" class="btn btn--danger-ghost" type="button">
+          Restablecer por defecto
+        </button>
+      </section>
+    </div>
+  </aside>
+  <div id="settings-backdrop" class="settings-backdrop" hidden></div>
+
+  <main class="main">
+    <section
+      id="drop-zone"
+      class="drop-zone"
+      tabindex="0"
+      aria-label="Arrastra audios aquí o haz clic para seleccionar"
+    >
+      <div class="drop-zone__inner">
+        <div class="drop-zone__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 3v14M5 12l7 7 7-7"/>
+          </svg>
+        </div>
+        <div class="drop-zone__text">
+          <strong>Arrastra audios aquí</strong>
+          <span>o haz clic para seleccionar archivos</span>
+        </div>
+        <button id="select-files" class="btn btn--primary" type="button">Seleccionar archivos</button>
+        <input id="file-input" type="file" accept="audio/*" multiple hidden />
+      </div>
+    </section>
+
+    <section class="list-section">
+      <div class="list-header">
+        <h2>Audios cargados <span id="count" class="count">0</span></h2>
+        <button id="clear-all" class="btn btn--danger-ghost" type="button">Limpiar todo</button>
+      </div>
+      <ul id="audio-list" class="audio-list" aria-live="polite"></ul>
+      <p id="empty-state" class="empty-state">No hay audios todavía. Arrastra archivos para empezar.</p>
+    </section>
+  </main>
+
+  <footer id="active-player" class="active-player" hidden>
+    <div class="active-player__info">
+      <img id="active-avatar" class="active-player__avatar" src="assets/default-avatar.png" alt="" />
+      <div class="active-player__meta">
+        <div id="active-name" class="active-player__name">—</div>
+        <div class="active-player__time">
+          <span id="active-current">0:00</span>
+          <span class="sep">/</span>
+          <span id="active-total">0:00</span>
+        </div>
+      </div>
+    </div>
+    <div class="active-player__progress" id="active-progress-track">
+      <div id="active-progress-fill" class="active-player__progress-fill"></div>
+    </div>
+    <div class="active-player__controls">
+      <button id="active-pause" class="btn btn--ghost" type="button">
+        <svg class="icon" viewBox="0 0 16 16" fill="currentColor"><rect x="3" y="2" width="4" height="12" rx="1"/><rect x="9" y="2" width="4" height="12" rx="1"/></svg>
+        Pause
+      </button>
+      <button id="active-resume" class="btn btn--ghost" type="button" hidden>
+        <svg class="icon" viewBox="0 0 16 16" fill="currentColor"><path d="M4 2l10 6-10 6z"/></svg>
+        Resume
+      </button>
+      <button id="active-stop" class="btn btn--danger" type="button">
+        <svg class="icon" viewBox="0 0 16 16" fill="currentColor"><rect x="3" y="3" width="10" height="10" rx="1"/></svg>
+        Stop
+      </button>
+    </div>
+  </footer>
+
+  <input id="avatar-input" type="file" accept="image/*" hidden />
+
+  <template id="item-template">
+    <li class="item" draggable="true">
+      <span class="drag-handle" aria-hidden="true">
+        <svg class="icon" viewBox="0 0 16 16" fill="currentColor">
+          <circle cx="5" cy="4" r="1.3"/><circle cx="11" cy="4" r="1.3"/>
+          <circle cx="5" cy="8" r="1.3"/><circle cx="11" cy="8" r="1.3"/>
+          <circle cx="5" cy="12" r="1.3"/><circle cx="11" cy="12" r="1.3"/>
+        </svg>
+      </span>
+      <button class="avatar-btn" type="button" title="Cambiar foto">
+        <img class="item-avatar" alt="" />
+      </button>
+      <div class="item-main">
+        <input
+          class="item-name"
+          type="text"
+          placeholder="Nombre del oyente"
+          maxlength="60"
+        />
+        <div class="item-file">
+          <span class="item-filename"></span>
+          <span class="item-duration"></span>
+        </div>
+      </div>
+      <div class="item-actions">
+        <button class="btn btn--primary btn--play" type="button" title="Reproducir">
+          <svg class="icon" viewBox="0 0 16 16" fill="currentColor"><path d="M4 2l10 6-10 6z"/></svg>
+        </button>
+        <button class="btn btn--ghost btn--pause" type="button" title="Pausa" hidden>
+          <svg class="icon" viewBox="0 0 16 16" fill="currentColor"><rect x="3" y="2" width="4" height="12" rx="1"/><rect x="9" y="2" width="4" height="12" rx="1"/></svg>
+        </button>
+        <button class="btn btn--ghost btn--stop" type="button" title="Stop" hidden>
+          <svg class="icon" viewBox="0 0 16 16" fill="currentColor"><rect x="3" y="3" width="10" height="10" rx="1"/></svg>
+        </button>
+        <button class="btn btn--icon btn--delete" type="button" title="Eliminar">
+          <svg class="icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2 4h12M6 4V2.5h4V4M5 4l.8 9.5h4.4L11 4"/>
+          </svg>
+        </button>
+      </div>
+    </li>
+  </template>
+
+  <script type="module" src="js/control.js"></script>
+</body>
+</html>

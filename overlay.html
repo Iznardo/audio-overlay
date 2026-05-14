@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Podcast Overlay</title>
+  <link rel="stylesheet" href="css/overlay.css" />
+</head>
+<body>
+  <div id="debug" class="debug" hidden>Esperando audio...</div>
+
+  <div id="overlay-position" class="overlay-position size-large pos-h-center pos-v-bottom">
+    <div id="overlay" class="overlay anim-from-bottom" aria-hidden="true">
+      <div class="card">
+        <div class="avatar-wrap">
+          <img id="avatar" class="avatar" alt="" />
+        </div>
+        <div class="content">
+          <div id="name" class="name">Oyente</div>
+          <canvas id="waveform" class="waveform"></canvas>
+          <div class="progress-row">
+            <span id="time-current" class="time">0:00</span>
+            <span class="time-sep">/</span>
+            <span id="time-total" class="time">0:00</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <audio id="audio" preload="auto"></audio>
+
+  <button id="enable-audio" class="enable-audio" type="button" hidden>
+    <span class="enable-audio__icon" aria-hidden="true">🔊</span>
+    <span class="enable-audio__text">
+      <strong>Click para activar audio</strong>
+      <small>Sólo necesario en previa de navegador (OBS no lo necesita)</small>
+    </span>
+  </button>
+
+  <script type="module" src="js/overlay.js"></script>
+</body>
+</html>
